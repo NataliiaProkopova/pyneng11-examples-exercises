@@ -64,12 +64,12 @@ trunk_template = [
     "switchport trunk allowed vlan {}",
 ]
 
-config_dict = {'access': access_template, 'trunk':trunk_template}
 
-intf_type = input('Введите режим работы интерфейса (access/trunk): ')
-intf_name = input('Введите тип и номер интерфейса: ')
-vlans_list = input('Введите номер влан(ов): ')
+template = {"access": access_template, "trunk": trunk_template}
 
-print(f'\ninterface {intf_name}')
-out_config = '\n'.join(config_dict[intf_type])
-print(out_config.format(vlans_list))
+mode = input("Введите режим работы интерфейса (access/trunk): ")
+interface = input("Введите тип и номер интерфейса: ")
+vlans = input("Введите номер влан(ов): ")
+
+print(f"interface {interface}")
+print("\n".join(template[mode]).format(vlans))

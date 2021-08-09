@@ -50,7 +50,8 @@ london_co = {
     },
 }
 
-dev_name = input('Введите имя устройства: ')
-params_list = list(london_co.setdefault(dev_name).keys())
-param_name = input('Введите имя параметра ({}): '.format(str(params_list).replace("'", "").strip("[]")))
-print(london_co.setdefault(dev_name).get(param_name, 'Такого параметра нет'))
+device = input("Введите имя устройства: ")
+params = ", ".join(london_co[device].keys())
+parameter = input(f"Введите имя параметра ({params}): ")
+
+print(london_co[device].get(parameter, "Такого параметра нет"))

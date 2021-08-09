@@ -13,15 +13,16 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
 
-ip_addr = input('Введите IP-адрес в формате 10.1.1.1: ')
-oct1 = int(ip_addr.split('.')[0])
-if  oct1>0 and oct1<=223:
-    print('unicast')
-elif oct1>223 and oct1<=239:
-    print('multicast')
-elif ip_addr == '255.255.255.255':
-    print('local broadcast')
-elif ip_addr == '0.0.0.0':
-    print('unassigned')
+ip_address = input("введите ip-адрес: ")
+oct1 = int(ip_address.split(".")[0])
+
+if ip_address == "255.255.255.255":
+    print("local broadcast")
+elif ip_address == "0.0.0.0":
+    print("unassigned")
+elif 1 <= oct1 <= 223:
+    print("unicast")
+elif 224 <= oct1 <= 239:
+    print("multicast")
 else:
-    print('unused')
+    print("unused")

@@ -43,3 +43,9 @@ london_co = {
         "routing": True,
     },
 }
+
+dev_name = input('Введите имя устройства: ')
+params_list = list(london_co.setdefault(dev_name).keys())
+param_name = input('Введите имя параметра ({}): '.format(str(params_list).replace("'", "").strip("[]")))
+param_name = param_name.lower()
+print(london_co.setdefault(dev_name).get(param_name, 'Такого параметра нет'))
