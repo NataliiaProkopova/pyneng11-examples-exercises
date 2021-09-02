@@ -74,9 +74,32 @@
 
 """
 
+from task_11_2 import create_network_map
+from draw_network_graph import draw_topology
+from pprint import pprint
+
 infiles = [
     "sh_cdp_n_sw1.txt",
     "sh_cdp_n_r1.txt",
     "sh_cdp_n_r2.txt",
     "sh_cdp_n_r3.txt",
 ]
+
+def unique_network_map(topology_dict):
+    '''
+    Функция возвращает словарь, который описывает соединения между
+    устройствами без "дублирующих" соединений.
+    '''
+    result = {}
+
+    for key, item in topology_dict.items():
+        if not result.get(item):
+            result[key]=item
+
+    return result
+
+
+if __name__ == "__main__":
+    topology = create_network_map(infiles)
+    topology = unique_network_map(topology)
+    draw_topology(topology)

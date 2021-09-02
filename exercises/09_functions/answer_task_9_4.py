@@ -65,22 +65,17 @@ def ignore_command(command, ignore):
             ignore_status = True
     return ignore_status
 
-def convert_config_to_dict (config_filename):
-    '''
-    Функция обрабатывает конфигурационный файл коммутатора и возвращает словарь
 
-    config_filename - имя конфигурационного файла
-    '''
-    result = {}
-    with open (config_filename, 'r') as f:
+def convert_config_to_dict(config_filename):
+    config_dict = {}
+    with open(config_filename) as f:
         for line in f:
-            if line == '\n' or line.startswith('!') or ignore_command(line, ignore):
-                continue
-            if not line.startswith(' '):
-                current_global = line.strip()
-                result[current_global] = []
-            else:
-                result[current_global].append(line.strip())
-    return (result)
+            line = line.rstrip()
+            if line and not (line.startswith("!") or ignore_command(line, ignore)):
+                if line[0].isalnum():
+                    section = line
+                    config_dict[section] = []
+                else:
+                    config_dict[section].append(line.strip())
+    return config_dict
 
-print(convert_config_to_dict('config_sw1.txt'))
