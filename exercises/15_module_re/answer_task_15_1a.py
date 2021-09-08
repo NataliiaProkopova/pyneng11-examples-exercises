@@ -24,30 +24,16 @@
 а не ввод пользователя.
 
 """
-
 import re
 
-def get_ip_from_cfg (filename):
-    '''
-    Функция должна обрабатывать конфигурацию и возвращать IP-адреса и маски,
-    которые настроены на интерфейсах, в виде словаря:
-    * ключ: имя интерфейса
-    * значение: кортеж с двумя строками:
-      * IP-адрес
-      * маска
-    filename - имя файла, в котором находится конфигурация устройства
-    '''
-    result = {}
-    regex = re.compile(r'interface (?P<int>\S+)\s*|ip address\s+(?P<ip>\S+)+\s+(?P<mask>\S+)')
-    with open (filename) as f:
-        for line in f:
-            match = regex.search(line)
-            if match:
-                if match.lastgroup == 'int':
-                    interface = match.group('int')
-                else:
-                    result[interface] = match.group(2,3)
-    return result
+def get_ip_from_cfg(config):
+    with open(config) as f:
+        regex = re.compile(
+            r"interface (?P<intf>\S+)\n"
+            r"( .*\n)*"
+            r" ip address (?P<ip>\S+) (?P<mask>\S+)"
+        )
+        match = regex.finditer(f.read())
 
-if __name__ == '__main__':
-    print (get_ip_from_cfg ('config_r1.txt'))
+    result = {m.group("intf"): m.group("ip", "mask") for m in match}
+    return result

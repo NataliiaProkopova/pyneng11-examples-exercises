@@ -25,23 +25,9 @@
 """
 import re
 
-def get_ip_from_cfg (filename):
-    '''
-    Функция должна обрабатывать конфигурацию и возвращать IP-адреса и маски,
-    которые настроены на интерфейсах, в виде списка кортежей:
-    * первый элемент кортежа - IP-адрес
-    * второй элемент кортежа - маска
-    filename - имя файла, в котором находится конфигурация устройства
-    '''
-    result = []
-    regex = re.compile(r'ip address\s+(\S+)+\s+(\S+)')
-    with open (filename) as f:
-        for line in f:
-            match = regex.search(line)
-            if match:
-                result.append(match.groups())
-                #print('{} {}'.format(match.groups()))
-    return result
 
-if __name__ == '__main__':
-    print (get_ip_from_cfg ('config_r1.txt'))
+def get_ip_from_cfg(config):
+    regex = r"ip address (\S+) (\S+)"
+    with open(config) as f:
+        result = [m.groups() for m in re.finditer(regex, f.read())]
+    return result
